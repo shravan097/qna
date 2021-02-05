@@ -4,6 +4,9 @@
 
 Integrate QnA to your page or provide a link for your QnA. 
 
+[![CircleCI](https://circleci.com/gh/shravan097/qna.svg?style=svg&circle-token=da4bc58f32a2b4fd239d346b0f8293ae0f827323)](https://app.circleci.com/pipelines/github/shravan097/qna)
+
+
 ### Main Requirement
 
 - User A can ask a question to another User B/Company  with an anonymous option
