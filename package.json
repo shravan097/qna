@@ -4,9 +4,8 @@
   "description": "Integrate QnA to your page or provide a link for your QnA.",
   "main": "index.js",
   "scripts": {
-    "start": "npm run build && node dist/app.js",
+    "start": "ts-node ./src/app.ts",
     "test": "mocha -r ts-node/register tests/**/*.spec.ts",
-    "build": "tsc",
     "lint": "eslint . --ext .ts"
   },
   "repository": {
