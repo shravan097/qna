@@ -1,11 +1,12 @@
 {
   "name": "qna",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "Integrate QnA to your page or provide a link for your QnA.",
   "main": "index.js",
   "scripts": {
     "start": "ts-node ./src/app.ts",
     "test": "mocha -r ts-node/register tests/**/*.spec.ts",
+    "local": "nodemon --watch 'src/app.ts' --exec npm start",
     "lint": "eslint . --ext .ts"
   },
   "repository": {
@@ -29,12 +30,14 @@
     "chai": "^4.3.0",
     "eslint": "^7.19.0",
     "mocha": "^8.2.1",
+    "nodemon": "^2.0.7",
     "prettier": "^2.2.1",
     "ts-node": "^9.1.1",
     "typescript": "^4.1.3"
   },
   "dependencies": {
     "express": "^4.17.1",
+    "helmet": "^4.4.1",
     "tslog": "^3.1.0"
   }
 }
