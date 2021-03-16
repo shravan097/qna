@@ -1,0 +1,8 @@
+version: "3.9"
+services:
+  main:
+    image: qna
+    ports:
+      - "8080:8080"
+    volumes:
+      - ${SRC_PATH}:/usr/src/qna/
