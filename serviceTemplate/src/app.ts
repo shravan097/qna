@@ -14,7 +14,8 @@ app.use(bodyParser.urlencoded({extended: true}));
 
 
 app.get('/version', (req: Request, res: Response) => {
-    res.json({name, version});
+    const hey = 'hey'
+    res.json({name, version, hey:'hey'});
 });
 app.use('/v1',v1Router);
 app.use((req: Request, res: Response) => {
@@ -28,6 +29,7 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction ) => {
     res.status(500);
 })
 
-app.listen(8080, () => {
-    log.info('Server is running on port 8080');
+const PORT = process.env.port || 8080
+app.listen(PORT, () => {
+    log.info(`Server is running on port ${PORT}`);
 });

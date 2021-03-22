@@ -7,8 +7,8 @@
     "start": "ts-node ./src/app.ts",
     "test": "mocha -r ts-node/register tests/**/*.spec.ts",
     "local": "nodemon --watch 'src/app.ts' --exec npm start",
-    "container:run": "docker-compose --env-file config/dev/.env -f docker/docker-compose.yml -p qna up",
-    "container:down": "docker-compose -f ./docker/docker-compose.yml down -v",
+    "container:dev": "cd docker; docker-compose -f docker-compose.yml -f docker-compose.dev.yml -p qna up",
+    "container:down": "echo 'Not yet implemented TODO'",
     "lint": "eslint . --ext .ts"
   },
   "repository": {

@@ -18,13 +18,3 @@ Integrate QnA to your page or provide a link for your QnA.
 
 - Highly Available System
 - Search time is fast ( < 1 sec latency )
-
-
-## Services
-
-- [Question](question/README.md)
-- Answer
-
-## How to Run
-
-- TODO: Make one docker-compose file to run all the iamges
