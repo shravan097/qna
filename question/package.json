@@ -6,7 +6,7 @@
   "scripts": {
     "start": "ts-node ./src/app.ts",
     "test": "mocha -r ts-node/register tests/**/*.spec.ts",
-    "local": "nodemon --watch 'src/app.ts' --exec npm start",
+    "local": "nodemon --watch 'src/**' --ext 'ts,json' --ignore 'src/**/*.spec.ts' --exec npm start",
     "lint": "eslint . --ext .ts"
   },
   "repository": {
@@ -37,6 +37,7 @@
   },
   "dependencies": {
     "express": "^4.17.1",
+    "express-async-handler": "^1.1.4",
     "helmet": "^4.4.1",
     "tslog": "^3.1.0"
   }

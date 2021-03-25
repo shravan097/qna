@@ -1,12 +1,9 @@
-import {Router, Request, Response} from 'express';
-
+import {Router} from 'express';
+import expressAsyncHandler from 'express-async-handler';
+import * as question from '../../controllers/question';
 const router:Router = Router();
 
-router.get('/', (req:Request,res:Response) => {
-    res.status(200).json({'message':'Cool beans!'});
-});
-router.post('/', (req:Request, res: Response) => {
-    res.status(200);
-});
+router.get('/', expressAsyncHandler(question.getQuestions));
+router.post('/', expressAsyncHandler(question.getQuestions));
 
 export default router;

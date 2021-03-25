@@ -1,4 +1,4 @@
-import express, { Application, Request, Response } from 'express';
+import express, { Application, NextFunction, Request, Response } from 'express';
 import bodyParser from 'body-parser';
 import { Logger } from 'tslog';
 import Helmet from 'helmet';
@@ -23,9 +23,9 @@ app.use((req: Request, res: Response) => {
 });
 
 // Global error handler
-app.use((err: Error, req: Request, res: Response) => {
+app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
     log.error(err);
-    res.status(500);
+    res.status(500).send('Error');
 });
 
 const PORT = process.env.port || 8080;
