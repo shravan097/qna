@@ -1,5 +1,3 @@
-import { Question } from "..";
-
 type ID = string;
 export type Question = {
     id: ID,

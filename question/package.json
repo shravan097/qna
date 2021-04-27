@@ -5,9 +5,10 @@
   "main": "index.js",
   "scripts": {
     "start": "ts-node ./src/app.ts",
-    "test": "mocha -r ts-node/register tests/**/*.spec.ts",
+    "test": "mocha -r ts-node/register tests/**/*.test.ts",
     "local": "nodemon --watch 'src/**' --ext 'ts,json' --ignore 'src/**/*.spec.ts' --exec npm start",
-    "lint": "eslint . --ext .ts"
+    "lint": "eslint . --ext .ts",
+    "fix": "eslint . --ext .ts --fix"
   },
   "repository": {
     "type": "git",
@@ -42,6 +43,7 @@
     "express": "^4.17.1",
     "express-async-handler": "^1.1.4",
     "helmet": "^4.4.1",
+    "http-status": "^1.5.0",
     "mongoose": "^5.12.5",
     "tslog": "^3.1.0",
     "uuid": "^8.3.2"
