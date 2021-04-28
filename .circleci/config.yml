@@ -7,9 +7,9 @@ workflows:
     question-test:
       jobs:
         - node/test:
-            app-dir: "~/project/qna/question"
+            app-dir: "~/project/question"
         # - aws-ecr/build-and-push-image:
         #     repo: "${AWS_RESOURCE_NAME_PREFIX}"
         #     tag: "${CIRCLE_SHA1}"
         #     requires: 
-        #       - node/test
+        #       - node/testcom
