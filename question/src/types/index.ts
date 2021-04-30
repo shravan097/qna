@@ -1,3 +1,3 @@
 export const constants = {
-	APP_READY:'READY'
+  APP_READY:'READY'
 };

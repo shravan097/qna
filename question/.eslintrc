@@ -10,7 +10,7 @@
       "plugin:@typescript-eslint/recommended"
     ],
     "rules": {
-      "indent": [2, "tab"],
+      "indent": ["error", 2],
       "semi": "off",
       "@typescript-eslint/semi": ["error"]
     } 

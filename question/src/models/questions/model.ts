@@ -8,11 +8,11 @@ interface IQuestion extends mongoose.Document {
 	notHelpful: number
 }
 const questionSchema = new mongoose.Schema({
-	text: String,
-	dateCreated: String,
-	dateUpdated: String,
-	helpful: Number,
-	notHelpful: Number
+  text: String,
+  dateCreated: String,
+  dateUpdated: String,
+  helpful: Number,
+  notHelpful: Number
 });
 const QuestionModel = mongoose.model<IQuestion>('Question', questionSchema);
 

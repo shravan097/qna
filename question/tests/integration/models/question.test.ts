@@ -9,27 +9,27 @@ import * as dotenv from "dotenv";
 
 describe('Question Model', () => {
 
-	before(async () => {
-		dotenv.config();
-		await connectDb();
-	});
+  before(async () => {
+    dotenv.config();
+    await connectDb();
+  });
 
-	after(async () => {
-		await Questions.clean();
-		await disconnectDb();
-	});
+  after(async () => {
+    await Questions.clean();
+    await disconnectDb();
+  });
 
-	it('should create a valid question record', async () => {
-		const sampleQuestion: Question = {
-			text: 'This is a test question',
-			dateCreated: '123',
-			dateUpdated: '345',
-			helpful: 1,
-			notHelpful: 2,
-		};
-		const record = await Questions.create(sampleQuestion);
-		expect(record).to.exist;
-		const actual = await Questions.get(record._id);
-		expect(JSON.stringify(actual)).to.eql(JSON.stringify(record));
-	});
+  it('should create a valid question record', async () => {
+    const sampleQuestion: Question = {
+      text: 'This is a test question',
+      dateCreated: '123',
+      dateUpdated: '345',
+      helpful: 1,
+      notHelpful: 2,
+    };
+    const record = await Questions.create(sampleQuestion);
+    expect(record).to.exist;
+    const actual = await Questions.get(record._id);
+    expect(JSON.stringify(actual)).to.eql(JSON.stringify(record));
+  });
 });
