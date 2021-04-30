@@ -1,15 +1,23 @@
-import {Question} from './types';
 import { logger } from '../../logger';
-import { QuestionModel } from './model';
+import { IQuestion, QuestionModel } from './model';
+import { Question } from './types';
 
-async function create(question: Question): Promise<void> {
+async function create(question: Question): Promise<IQuestion> {
 	const newQuestion = new QuestionModel(question);
 	const result = await newQuestion.save();
-	logger.info('Question creating complete');
-	logger.info(JSON.stringify(result));
+	logger.debug('question created');
+	return result;
 }
 
-async function get(id: string): Promise<Question> {
-	return (await QuestionModel.findById(id)) as Question;
+async function get(id: string): Promise<IQuestion> {
+	const record: IQuestion = (await QuestionModel.findById(id)) as IQuestion;
+	logger.debug(`get for ${id}`);
+	return record;
 }
-export {create, get};
+
+// For Test Cleanup only
+async function clean(): Promise<void> {
+	await QuestionModel.deleteMany({});
+	logger.debug('Cleaning DB complete');
+}
+export {create, get, clean, IQuestion};

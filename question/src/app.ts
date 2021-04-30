@@ -5,7 +5,6 @@ import {name, version} from '../package.json';
 import {v1Router} from './api/v1';
 import { connectDb } from './util/dbConnect';
 import { Server } from 'http';
-import {constants} from './types';
 import { logger } from './logger';
 import * as dotenv from "dotenv";
 
@@ -17,10 +16,7 @@ app.use(Helmet());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
-// Startup stuff
 
-// Connecting to Db
-connectDb(app);
 
 app.get('/version', (req: Request, res: Response) => {
 	res.json({name, version});
@@ -40,12 +36,12 @@ app.use((err: Error, req: Request, res: Response, next?: NextFunction) => {
 
 const PORT = process.env.port || 8080;
 let server:Server;
-app.on(constants.APP_READY, () => {
+// Connecting to Db
+connectDb().then(() => {
 	app.listen(PORT, () => {
 		logger.info(`Server is running on port ${PORT}`);
 	});
 });
-
 process.on('SIGTERM', () => {
 	if (server) {
 		server.close(() => {

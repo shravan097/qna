@@ -1,13 +1,19 @@
 import mongoose from 'mongoose';
-import { Question } from './types';
+
+interface IQuestion extends mongoose.Document {
+	text: string,
+	dateCreated: string,
+	dateUpdated: string,
+	helpful: number,
+	notHelpful: number
+}
 const questionSchema = new mongoose.Schema({
-	id: String,
 	text: String,
 	dateCreated: String,
 	dateUpdated: String,
 	helpful: Number,
 	notHelpful: Number
 });
-const QuestionModel = mongoose.model<Question & mongoose.Document>('Question', questionSchema);
+const QuestionModel = mongoose.model<IQuestion>('Question', questionSchema);
 
-export {QuestionModel};
+export {IQuestion, QuestionModel};

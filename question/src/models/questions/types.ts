@@ -1,6 +1,4 @@
-type ID = string;
 export type Question = {
-    id: ID,
     text: string,
     dateCreated: string,
     dateUpdated: string,

@@ -4,8 +4,6 @@ import {Questions} from '../models';
 import {logger} from '../logger';
 import * as Status from 'http-status';
 import { Question } from '../models/questions/types';
-import { validate } from 'uuid';
-import { stat } from 'fs';
 
 function validateRequest(req:Request, res: Response): void {
 	if(! req.body) {
