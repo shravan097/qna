@@ -1,6 +1,9 @@
-import mongoose from 'mongoose';
+import mongoose from 'mongoose'
+import {logger} from '../../logger'
 
 interface IQuestion extends mongoose.Document {
+  // This is same field as types/Quesiton without optional types
+  _id: string,
 	text: string,
 	dateCreated: string,
 	dateUpdated: string,
@@ -8,12 +11,18 @@ interface IQuestion extends mongoose.Document {
 	notHelpful: number
 }
 const questionSchema = new mongoose.Schema({
+  _id: String, 
   text: String,
   dateCreated: String,
   dateUpdated: String,
   helpful: Number,
   notHelpful: Number
-});
-const QuestionModel = mongoose.model<IQuestion>('Question', questionSchema);
+}, {_id: false})
+questionSchema.index({_id: true, text: true}, {sparse: true})
+questionSchema.on('index', (err) => {
+  logger.error('Indexing failed')
+  process.kill(process.pid, "SIGINT")
+})
+const QuestionModel = mongoose.model<IQuestion>('Question', questionSchema)
 
-export {IQuestion, QuestionModel};
+export {IQuestion, QuestionModel}

@@ -1,3 +1,3 @@
-import { getLogger } from './logger';
-const logger = getLogger();
-export {logger};
+import { getLogger } from './logger'
+const logger = getLogger()
+export {logger}

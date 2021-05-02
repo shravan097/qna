@@ -1,11 +1,11 @@
-import { Logger } from 'tslog';
+import { Logger } from 'tslog'
 
-let logger: Logger;
+let logger: Logger
 export function getLogger(): Logger {
   if (!logger) {
-    logger = new Logger();
-    logger.info('Initialized Logger');
+    logger = new Logger()
+    logger.info('Initialized Logger')
   }
-  return logger;
+  return logger
 
 }

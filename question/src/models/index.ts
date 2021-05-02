@@ -1,1 +1,1 @@
-export * as Questions from './questions';
+export * as Questions from './questions'

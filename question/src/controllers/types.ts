@@ -1,5 +1,6 @@
-export enum FunctionStatus {
-    FAILED = 0,
-    SUCCESS = 1,
-    PENDING = 2,
+import { SchemaObject } from 'ajv'
+import {Request} from 'express'
+
+export interface _Request extends Request {
+    schema?: SchemaObject
 }
