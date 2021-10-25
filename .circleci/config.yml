@@ -7,7 +7,7 @@ workflows:
     qna-test:
       jobs:
         - node/test:
-            app-dir: "~/project/qna"
+            app-dir: "~/project/qna/qna"
         # - aws-ecr/build-and-push-image:
         #     repo: "${AWS_RESOURCE_NAME_PREFIX}"
         #     tag: "${CIRCLE_SHA1}"
