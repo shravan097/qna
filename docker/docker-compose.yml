@@ -1,5 +1,0 @@
-version: "3.9"
-services:
-  main:
-    image: qna
-    working_dir: /usr/qna/
