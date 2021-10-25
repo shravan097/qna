@@ -1,13 +1,13 @@
 version: 2.1
 orbs:
   node: circleci/node@3.0.0
-  aws-ecr: circleci/aws-ecr@6.15.3
+  # aws-ecr: circleci/aws-ecr@6.15.3
 
 workflows:
     qna-test:
       jobs:
         - node/test:
-            app-dir: "~/qna/qna"
+            app-dir: "~/project/qna"
         # - aws-ecr/build-and-push-image:
         #     repo: "${AWS_RESOURCE_NAME_PREFIX}"
         #     tag: "${CIRCLE_SHA1}"
