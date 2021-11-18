@@ -19,14 +19,9 @@ export class QuestionsController {
     return this.questionsService.create(createQuestionDto)
   }
 
-  @Get()
-  findAll() {
-    return this.questionsService.findAll()
-  }
-
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.questionsService.findOne(+id)
+    return this.questionsService.findOne(id)
   }
 
   @Patch(':id')
@@ -34,11 +29,11 @@ export class QuestionsController {
     @Param('id') id: string,
     @Body() updateQuestionDto: CreateOrUpdateQuestionDto
   ) {
-    return this.questionsService.update(+id, updateQuestionDto)
+    return this.questionsService.update(updateQuestionDto)
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.questionsService.remove(+id)
+    return this.questionsService.remove(id)
   }
 }
