@@ -1,26 +1,28 @@
-import { Injectable } from '@nestjs/common';
-import { CreateQuestionDto } from './dto/create-question.dto';
-import { UpdateQuestionDto } from './dto/update-question.dto';
+import { Injectable } from '@nestjs/common'
+import { CreateOrUpdateQuestionDto } from './../../src/questions/dto'
+import { QuestionDb, QuestionDbFactory } from './database'
 
 @Injectable()
 export class QuestionsService {
-  create(createQuestionDto: CreateQuestionDto) {
-    return 'This action adds a new question';
+  questionDb: QuestionDb
+
+  constructor() {
+    this.questionDb = QuestionDbFactory.getQuestionDb('memory')
   }
 
-  findAll() {
-    return `This action returns all questions`;
+  async create(createQuestionDto: CreateOrUpdateQuestionDto) {
+    return this.questionDb.createOrUpdate(createQuestionDto)
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} question`;
+  async findOne(id: string) {
+    return this.questionDb.read(id)
   }
 
-  update(id: number, updateQuestionDto: UpdateQuestionDto) {
-    return `This action updates a #${id} question`;
+  update(updateQuestionDto: CreateOrUpdateQuestionDto) {
+    return this.questionDb.createOrUpdate(updateQuestionDto)
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} question`;
+  remove(id: string) {
+    return this.questionDb.delete(id)
   }
 }
