@@ -18,6 +18,10 @@ export class QuestionsService {
     return this.questionDb.read(id)
   }
 
+  async findAll() {
+    return this.questionDb.findAll()
+  }
+
   update(updateQuestionDto: CreateOrUpdateQuestionDto) {
     return this.questionDb.createOrUpdate(updateQuestionDto)
   }
