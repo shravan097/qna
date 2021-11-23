@@ -6,7 +6,7 @@ import {
   Patch,
   Param,
   Delete,
-  BadRequestException,
+  BadRequestException
 } from '@nestjs/common'
 import { QuestionsService } from './questions.service'
 import { CreateOrUpdateQuestionDto } from './dto'

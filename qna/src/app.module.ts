@@ -7,6 +7,6 @@ import { AnswersModule } from './answers/answers.module'
 @Module({
   imports: [QuestionsModule, AnswersModule],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService]
 })
 export class AppModule {}

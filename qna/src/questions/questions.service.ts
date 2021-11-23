@@ -22,11 +22,11 @@ export class QuestionsService {
     return this.questionDb.findAll()
   }
 
-  update(updateQuestionDto: CreateOrUpdateQuestionDto) {
+  async update(updateQuestionDto: CreateOrUpdateQuestionDto) {
     return this.questionDb.createOrUpdate(updateQuestionDto)
   }
 
-  remove(id: string) {
+  async remove(id: string) {
     return this.questionDb.delete(id)
   }
 }
