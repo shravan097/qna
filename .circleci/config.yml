@@ -1,15 +1,12 @@
-version: 2.1
+version: '2.1'
 orbs:
-  node: circleci/node@3.0.0
-  # aws-ecr: circleci/aws-ecr@6.15.3
-
+  codecov: codecov/codecov@3.1.1
+  node: circleci/node@4.7.0
 workflows:
-    qna-test:
-      jobs:
-        - node/test:
-            app-dir: "~/project/qna"
-        # - aws-ecr/build-and-push-image:
-        #     repo: "${AWS_RESOURCE_NAME_PREFIX}"
-        #     tag: "${CIRCLE_SHA1}"
-        #     requires: 
-        #       - node/test
+  upload-to-codecov:
+    jobs:
+      - node/test:
+          app-dir: "~/project/qna"
+          run-command: "test:cov"
+          post-steps:
+            - codecov/upload
