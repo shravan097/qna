@@ -6,6 +6,7 @@ export interface QuestionDb {
   read(id: string): Promise<Question>
   createOrUpdate(param: CreateOrUpdateQuestionDto): Promise<Question>
   delete(id: string): Promise<void>
+  findAll(): Promise<{ [id: string]: Question }>
 }
 
 export class MemoryQuestionDb implements QuestionDb {
@@ -20,6 +21,10 @@ export class MemoryQuestionDb implements QuestionDb {
       throw new NotFoundException()
     }
     return this.memoryDb[id]
+  }
+
+  async findAll() {
+    return this.memoryDb
   }
 
   async createOrUpdate(param: CreateOrUpdateQuestionDto) {
@@ -39,6 +44,7 @@ export class MemoryQuestionDb implements QuestionDb {
   }
 }
 
+// @todo(sd): Use @Injectable here for this
 export class SingletonMemoryQuestionDb {
   readonly gMemoryQuestionDb: QuestionDb
   constructor() {

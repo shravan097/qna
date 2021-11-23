@@ -6,7 +6,7 @@ describe('QuestionDb', () => {
   allDb.forEach((db) => {
     it('should be create/read', async () => {
       const sampleQuestion = {
-        text: 'How can I install this ?',
+        text: 'How can I install this ?'
       }
       const createResponse = await db.createOrUpdate(sampleQuestion)
       const readResponse = await db.read(createResponse.id)
@@ -15,16 +15,16 @@ describe('QuestionDb', () => {
     })
     it('should update if it already exists', async () => {
       const sampleQuestion = {
-        text: 'How can I install this ?',
+        text: 'How can I install this ?'
       }
       const createResponse = await db.createOrUpdate(sampleQuestion)
       const secondCreateResponse = await db.createOrUpdate({
         ...createResponse,
-        text: 'This is different',
+        text: 'This is different'
       })
       expect(secondCreateResponse).toEqual({
         ...createResponse,
-        text: 'This is different',
+        text: 'This is different'
       })
       expect(createResponse.id).toEqual(secondCreateResponse.id)
       await db.delete(createResponse.id)
