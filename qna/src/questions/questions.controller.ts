@@ -3,10 +3,10 @@ import {
   Get,
   Post,
   Body,
-  Patch,
   Param,
   Delete,
-  BadRequestException
+  BadRequestException,
+  Put
 } from '@nestjs/common'
 import { QuestionsService } from './questions.service'
 import { CreateOrUpdateQuestionDto } from './dto'
@@ -33,13 +33,13 @@ export class QuestionsController {
     return this.questionsService.findAll()
   }
 
-  @Patch(':id')
+  @Put(':id')
   update(
     @Param('id') id: string,
     @Body() updateQuestionDto: CreateOrUpdateQuestionDto
   ) {
     if (!updateQuestionDto.text) {
-      throw new BadRequestException()
+      throw new BadRequestException('Missing text field')
     }
     return this.questionsService.update({ id, ...updateQuestionDto })
   }

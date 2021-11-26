@@ -1,26 +1,32 @@
 import { Injectable } from '@nestjs/common'
-import { CreateAnswerDto } from './dto/create-answer.dto'
-import { UpdateAnswerDto } from './dto/update-answer.dto'
+import { CreateOrUpdateAnswerDto } from './dto'
+import { AnswerDbFactory, AnswersDb } from './database'
 
 @Injectable()
 export class AnswersService {
-  create(createAnswerDto: CreateAnswerDto) {
-    return 'This action adds a new answer'
+  answerDb: AnswersDb
+
+  constructor() {
+    this.answerDb = AnswerDbFactory.getAnswerDb('memory')
   }
 
-  findAll() {
-    return `This action returns all answers`
+  async create(createAnswerDto: CreateOrUpdateAnswerDto) {
+    return this.answerDb.createOrUpdate(createAnswerDto)
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} answer`
+  async findOne(id: string) {
+    return this.answerDb.read(id)
   }
 
-  update(id: number, updateAnswerDto: UpdateAnswerDto) {
-    return `This action updates a #${id} answer`
+  async findAll() {
+    return this.answerDb.findAll()
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} answer`
+  async update(updateAnswerDto: CreateOrUpdateAnswerDto) {
+    return this.answerDb.createOrUpdate(updateAnswerDto)
+  }
+
+  async remove(id: string) {
+    return this.answerDb.delete(id)
   }
 }

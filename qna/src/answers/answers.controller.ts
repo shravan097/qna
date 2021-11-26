@@ -3,20 +3,20 @@ import {
   Get,
   Post,
   Body,
-  Patch,
   Param,
-  Delete
+  Delete,
+  Put,
+  BadRequestException
 } from '@nestjs/common'
 import { AnswersService } from './answers.service'
-import { CreateAnswerDto } from './dto/create-answer.dto'
-import { UpdateAnswerDto } from './dto/update-answer.dto'
+import { CreateOrUpdateAnswerDto } from './dto'
 
 @Controller('answers')
 export class AnswersController {
   constructor(private readonly answersService: AnswersService) {}
 
   @Post()
-  create(@Body() createAnswerDto: CreateAnswerDto) {
+  create(@Body() createAnswerDto: CreateOrUpdateAnswerDto) {
     return this.answersService.create(createAnswerDto)
   }
 
@@ -27,16 +27,24 @@ export class AnswersController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.answersService.findOne(+id)
+    return this.answersService.findOne(id)
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateAnswerDto: UpdateAnswerDto) {
-    return this.answersService.update(+id, updateAnswerDto)
+  @Put(':id')
+  update(
+    @Param('id') id: string,
+    @Body() updateAnswerDto: CreateOrUpdateAnswerDto
+  ) {
+    if (!updateAnswerDto.text || !updateAnswerDto.questionId) {
+      throw new BadRequestException(
+        `missing ${!updateAnswerDto.text ? 'text' : 'questionId'}`
+      )
+    }
+    return this.answersService.update(updateAnswerDto)
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.answersService.remove(+id)
+    return this.answersService.remove(id)
   }
 }
