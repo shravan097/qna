@@ -1,4 +1,5 @@
-import { NotFoundException } from '@nestjs/common'
+import { Injectable, NotFoundException } from '@nestjs/common'
+import { DbFactory } from '../../dbFactory'
 import { v4 as uuidv4 } from 'uuid'
 import { CreateOrUpdateQuestionDto, Question } from '../dto'
 
@@ -7,13 +8,17 @@ export interface QuestionDb {
   createOrUpdate(param: CreateOrUpdateQuestionDto): Promise<Question>
   delete(id: string): Promise<void>
   findAll(): Promise<{ [id: string]: Question }>
+  /** Used for testing purpose only */
+  reset(): Promise<void>
 }
+export const serviceName = 'questions'
 
+@Injectable()
 export class MemoryQuestionDb implements QuestionDb {
   memoryDb: { [id: string]: Question }
 
   constructor() {
-    this.memoryDb = {}
+    this.memoryDb = DbFactory.getDb(serviceName)
   }
 
   async read(id: string) {
@@ -42,27 +47,23 @@ export class MemoryQuestionDb implements QuestionDb {
     delete this.memoryDb[id]
     return
   }
-}
 
-// @todo(sd): Use @Injectable here for this
-export class SingletonMemoryQuestionDb {
-  readonly gMemoryQuestionDb: QuestionDb
-  constructor() {
-    if (!this.gMemoryQuestionDb) {
-      this.gMemoryQuestionDb = new MemoryQuestionDb()
-    }
-  }
-  static getMemoryQuestionDb(): QuestionDb {
-    return new SingletonMemoryQuestionDb().gMemoryQuestionDb
+  async reset() {
+    this.memoryDb = {}
   }
 }
 
 export const DbType = 'memory'
 
+// @todo(sd): Use @Injectable here for this
 export class QuestionDbFactory {
+  static gMemoryQuestionDb
   static getQuestionDb(dbType: typeof DbType) {
     if (dbType === 'memory') {
-      return SingletonMemoryQuestionDb.getMemoryQuestionDb()
+      if (!QuestionDbFactory.gMemoryQuestionDb) {
+        QuestionDbFactory.gMemoryQuestionDb = new MemoryQuestionDb()
+      }
+      return QuestionDbFactory.gMemoryQuestionDb
     }
   }
 }

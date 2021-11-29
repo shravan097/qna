@@ -3,40 +3,62 @@ import {
   Get,
   Post,
   Body,
-  Patch,
   Param,
-  Delete
+  Delete,
+  Put,
+  BadRequestException
 } from '@nestjs/common'
+import { QuestionsService } from '../questions/questions.service'
 import { AnswersService } from './answers.service'
-import { CreateAnswerDto } from './dto/create-answer.dto'
-import { UpdateAnswerDto } from './dto/update-answer.dto'
+import { CreateOrUpdateAnswerDto } from './dto'
 
 @Controller('answers')
 export class AnswersController {
-  constructor(private readonly answersService: AnswersService) {}
+  questionService: QuestionsService
+  constructor(private readonly answersService: AnswersService) {
+    this.questionService = new QuestionsService()
+  }
 
   @Post()
-  create(@Body() createAnswerDto: CreateAnswerDto) {
-    return this.answersService.create(createAnswerDto)
+  async create(@Body() createAnswerDto: CreateOrUpdateAnswerDto) {
+    const { text, questionId } = createAnswerDto
+    if (!text || !questionId) {
+      throw new BadRequestException(
+        `missing ${!createAnswerDto.text ? 'text' : 'questionId'} field`
+      )
+    }
+    await this.questionService.findOne(questionId)
+    return await this.answersService.create(createAnswerDto)
   }
 
   @Get()
-  findAll() {
-    return this.answersService.findAll()
+  async findAll() {
+    return await this.answersService.findAll()
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.answersService.findOne(+id)
+  async findOne(@Param('id') id: string) {
+    return await this.answersService.findOne(id)
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateAnswerDto: UpdateAnswerDto) {
-    return this.answersService.update(+id, updateAnswerDto)
+  @Put(':id')
+  async update(
+    @Param('id') id: string,
+    @Body() updateAnswerDto: CreateOrUpdateAnswerDto
+  ) {
+    const { text, questionId } = updateAnswerDto
+    if (!text || !questionId) {
+      throw new BadRequestException(
+        `missing ${!updateAnswerDto.text ? 'text' : 'questionId'}`
+      )
+    }
+    // Check if question exists
+    await this.questionService.findOne(questionId)
+    return await this.answersService.update({ id, ...updateAnswerDto })
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.answersService.remove(+id)
+  async remove(@Param('id') id: string) {
+    await this.answersService.remove(id)
   }
 }

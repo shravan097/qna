@@ -3,10 +3,10 @@ import {
   Get,
   Post,
   Body,
-  Patch,
   Param,
   Delete,
-  BadRequestException
+  BadRequestException,
+  Put
 } from '@nestjs/common'
 import { QuestionsService } from './questions.service'
 import { CreateOrUpdateQuestionDto } from './dto'
@@ -16,36 +16,36 @@ export class QuestionsController {
   constructor(private readonly questionsService: QuestionsService) {}
 
   @Post()
-  create(@Body() createQuestionDto: CreateOrUpdateQuestionDto) {
+  async create(@Body() createQuestionDto: CreateOrUpdateQuestionDto) {
     if (!createQuestionDto.text) {
-      throw new BadRequestException()
+      throw new BadRequestException('missing text field')
     }
-    return this.questionsService.create(createQuestionDto)
+    return await this.questionsService.create(createQuestionDto)
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.questionsService.findOne(id)
+  async findOne(@Param('id') id: string) {
+    return await this.questionsService.findOne(id)
   }
 
   @Get()
-  findAll() {
-    return this.questionsService.findAll()
+  async findAll() {
+    return await this.questionsService.findAll()
   }
 
-  @Patch(':id')
-  update(
+  @Put(':id')
+  async update(
     @Param('id') id: string,
     @Body() updateQuestionDto: CreateOrUpdateQuestionDto
   ) {
     if (!updateQuestionDto.text) {
-      throw new BadRequestException()
+      throw new BadRequestException('Missing text field')
     }
-    return this.questionsService.update({ id, ...updateQuestionDto })
+    return await this.questionsService.update({ id, ...updateQuestionDto })
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.questionsService.remove(id)
+  async remove(@Param('id') id: string) {
+    return await this.questionsService.remove(id)
   }
 }
