@@ -10,6 +10,10 @@
     "sourceMap": true,
     "outDir": "./dist",
     "baseUrl": "./",
+    // @todo figure this out later
+    // "paths": {
+    //   "src/*": ["src/*"]
+    // },
     "incremental": true,
     "skipLibCheck": true,
     "strictNullChecks": false,

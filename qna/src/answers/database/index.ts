@@ -1,19 +1,23 @@
 import { NotFoundException } from '@nestjs/common'
+import { DbFactory } from '../../dbFactory'
 import { v4 as uuidv4 } from 'uuid'
 import { CreateOrUpdateAnswerDto, Answer } from '../dto'
+
+export const serviceName = 'answers'
 
 export interface AnswersDb {
   read(id: string): Promise<Answer>
   createOrUpdate(param: CreateOrUpdateAnswerDto): Promise<Answer>
   delete(id: string): Promise<void>
   findAll(): Promise<{ [id: string]: Answer }>
+  reset(): Promise<void>
 }
 
 export class MemoryAnswerDb implements AnswersDb {
   memoryDb: { [id: string]: Answer }
 
   constructor() {
-    this.memoryDb = {}
+    this.memoryDb = DbFactory.getDb(serviceName)
   }
 
   async read(id: string) {
@@ -42,27 +46,23 @@ export class MemoryAnswerDb implements AnswersDb {
     delete this.memoryDb[id]
     return
   }
-}
-
-// @todo(sd): Use @Injectable here for this
-export class SingletonMemoryAnswersDb {
-  readonly gMemoryAnswerDb: AnswersDb
-  constructor() {
-    if (!this.gMemoryAnswerDb) {
-      this.gMemoryAnswerDb = new MemoryAnswerDb()
-    }
-  }
-  static getMemoryAnswerDb(): AnswersDb {
-    return new SingletonMemoryAnswersDb().gMemoryAnswerDb
+  
+  async reset() {
+    this.memoryDb = {}
   }
 }
 
 export const DbType = 'memory'
 
+// @todo(sd): Use @Injectable here for this
 export class AnswerDbFactory {
+  static gMemoryAnswerDb: AnswersDb
   static getAnswerDb(dbType: typeof DbType) {
     if (dbType === 'memory') {
-      return SingletonMemoryAnswersDb.getMemoryAnswerDb()
+      if (!AnswerDbFactory.gMemoryAnswerDb) {
+        AnswerDbFactory.gMemoryAnswerDb = new MemoryAnswerDb()
+      }
+      return AnswerDbFactory.gMemoryAnswerDb
     }
   }
 }
